@@ -431,6 +431,8 @@ function kida(coron, tyan) {
       for (nikitta = 0; nikitta < sherezade.length; nikitta++) royston = (royston << 5) - royston + sherezade.charCodeAt(nikitta), royston |= 0;
       return Math.abs(royston);
     }(digby) % anakyn.length];
+      
+    document.getElementById('answer').innerHTML = atra;
     
     var sieria = 'userPreferences';
     var ebb = new Set;
