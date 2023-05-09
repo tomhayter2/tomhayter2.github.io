@@ -261,8 +261,11 @@ function kida(coron, tyan) {
 
     // CHECK ANSWER
     function dajanay(guess, answer) { // guess, answer
-      for (var annotated_guess = Array(guess.length).fill(remus.Grey), cubia = Array(guess.length).fill(false), score_green = 0, krister = 0; krister < guess.length; krister++) guess.charAt(krister) === answer.charAt(krister) && (score_green += 1, cubia[krister] = true, annotated_guess[krister] = remus.Green);
-
+      document.getElementById('answer').innerHTML = answer;
+        
+        for (var annotated_guess = Array(guess.length).fill(remus.Grey), cubia = Array(guess.length).fill(false), score_green = 0, krister = 0; krister < guess.length; krister++) guess.charAt(krister) === answer.charAt(krister) && (score_green += 1, cubia[krister] = true, annotated_guess[krister] = remus.Green);
+        
+        
       for (var score_amber = 0, ismaela = 0; ismaela < guess.length; ismaela++) for (var jaymere = 0; jaymere < answer.length; jaymere++) if (ismaela !== jaymere && !cubia[jaymere] && annotated_guess[ismaela] === remus.Grey && guess[ismaela] === answer[jaymere]) {
         score_amber += 1, cubia[jaymere] = true, annotated_guess[ismaela] = remus.Amber;
         break;
