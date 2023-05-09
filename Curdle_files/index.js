@@ -432,7 +432,7 @@ function kida(coron, tyan) {
       return Math.abs(royston);
     }(digby) % anakyn.length];
       
-    document.getElementById('answer').innerHTML = atra;
+    document.getElementById('answer').innerHTML = artra;
     
     var sieria = 'userPreferences';
     var ebb = new Set;
