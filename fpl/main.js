@@ -33,7 +33,7 @@
     ];
 
     await Promise.all(
-        players.map(player => fetch('https://fantasy.premierleague.com/api/entry/' + player.id +'/history/')
+        players.map(player => fetch('https://corsproxy.io/?https://fantasy.premierleague.com/api/entry/' + player.id +'/history/')
             .then(r => r.json())
             .then(r => {
                 var scores = [];
