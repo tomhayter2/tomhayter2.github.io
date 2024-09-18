@@ -4,35 +4,27 @@
     var players  = [
         {
             label: 'Tom',
-            id: 5314165
+            id: 3882927
         },
         {
             label: 'Paul',
-            id: 83518
+            id: 151823
         },
         {
             label: 'Jerry',
-            id: 2430277
+            id: 4083398
         },
         {
             label: 'Jimmy',
-            id: 4491334
+            id: 5625792
         },
         {
             label: 'Dave',
-            id: 4539963
+            id: 1951186
         },
         {
             label: 'Erdemir',
-            id: 3612853
-        },
-        {
-            label: 'Jordan',
-            id: 3601687
-        },
-        {
-            label: 'Nat',
-            id: 6548687
+            id: 6752737
         }
     ];
 
