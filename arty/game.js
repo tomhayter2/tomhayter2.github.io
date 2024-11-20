@@ -9,6 +9,8 @@ function isMobileDevice() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOMContentLoaded event fired');
     console.log('Is mobile device?', isMobileDevice());
+    document.getElementById('startButton').click() 
+    
     if (!isMobileDevice()) {
         console.log('Not a mobile device, showing desktop message');
         showDesktopMessage();
