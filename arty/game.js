@@ -37,7 +37,7 @@ function showDesktopMessage() {
 }
 
 function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    return true;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -1566,7 +1566,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 function isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    return true;
 }
 
 function drawDesktopMessage() {
