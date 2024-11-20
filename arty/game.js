@@ -37,11 +37,17 @@ function showDesktopMessage() {
 }
 
 function isMobileDevice() {
-    return true;
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOMContentLoaded event fired');
+    console.log('Is mobile device?', isMobileDevice());
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message');
+        showDesktopMessage();
+        return;
+    }
 
     const layloGate = document.getElementById('layloGate');
     const layloForm = document.getElementById('layloForm');
@@ -99,24 +105,12 @@ function removeClickableAreas() {
 
 function initGame() {
     console.log('initGame called');
-
-    if (!gameUnlocked) {
-        unlockGame();
-		console.log('Game is locked. Please sign up to play.');
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message from initGame');
+        showDesktopMessage();
         return;
     }
 
-    console.log('Initializing game');
-    canvas = document.getElementById('gameCanvas');
-    ctx = canvas.getContext('2d');
-    
-    
-    // Rest of the initGame function...
-}
-
-// Modify the existing initGame function
-function initGame() {
-    console.log('initGame called');
     if (!gameUnlocked) {
         console.log('Game is locked. Please sign up to play.');
         return;
@@ -125,7 +119,37 @@ function initGame() {
     console.log('Initializing game');
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
+    
+    if (!isMobileDevice()) {
+        drawDesktopMessage();
+        return;
+    }
+    
+    // Rest of the initGame function...
+}
 
+// Modify the existing initGame function
+function initGame() {
+    console.log('initGame called');
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message from initGame');
+        showDesktopMessage();
+        return;
+    }
+
+    if (!gameUnlocked) {
+        console.log('Game is locked. Please sign up to play.');
+        return;
+    }
+
+    console.log('Initializing game');
+    canvas = document.getElementById('gameCanvas');
+    ctx = canvas.getContext('2d');
+    
+    if (!isMobileDevice()) {
+        drawDesktopMessage();
+        return;
+    }
     
     // Rest of the initGame function...
 }
@@ -374,6 +398,11 @@ document.addEventListener('DOMContentLoaded', initGame);
 
 function initGame() {
     console.log('initGame called');
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message from initGame');
+        showDesktopMessage();
+        return;
+    }
 
     if (!gameUnlocked) {
         console.log('Game is locked. Please sign up to play.');
@@ -383,7 +412,11 @@ function initGame() {
     console.log('Initializing game');
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
-   
+    
+    if (!isMobileDevice()) {
+        drawDesktopMessage();
+        return // Exit the function early for non-mobile devices
+    }
     
     // Load high score
     highScore = parseInt(localStorage.getItem('highScore')) || 0;
@@ -663,6 +696,8 @@ let lastFrameTime = 0;
 const MAX_DELTA_TIME = 1 / 30; // Cap delta time at 1/30th of a second
 
 function gameLoop(timestamp) {
+    if (!isMobileDevice()) return; // Exit early for non-mobile devices
+
     const deltaTime = Math.min((timestamp - lastFrameTime) / 1000, MAX_DELTA_TIME);
     lastFrameTime = timestamp;
 
@@ -1531,7 +1566,7 @@ document.addEventListener('keydown', (event) => {
 });
 
 function isMobileDevice() {
-    return true;
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
 }
 
 function drawDesktopMessage() {
