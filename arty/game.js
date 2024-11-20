@@ -1,40 +1,6 @@
 let gameUnlocked = false;
 
 // Define showDesktopMessage in the global scope
-function showDesktopMessage() {
-    console.log('Showing desktop message');
-    // Hide the Laylo gate and game canvas
-    const layloGate = document.getElementById('layloGate');
-    if (layloGate) layloGate.style.display = 'none';
-
-    const gameCanvas = document.getElementById('gameCanvas');
-    if (gameCanvas) gameCanvas.style.display = 'none';
-
-    // Create and display the desktop message
-    const desktopMessage = document.createElement('div');
-    desktopMessage.id = 'desktopMessage';
-    desktopMessage.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #1E90FF;
-        color: white;
-        font-family: Arial, sans-serif;
-        font-size: 24px;
-        text-align: center;
-        padding: 20px;
-        z-index: 9999;
-    `;
-    desktopMessage.textContent = 'This game is only playable on mobile devices.';
-    document.body.appendChild(desktopMessage);
-
-    console.log('Desktop message should be displayed now');
-}
 
 function isMobileDevice() {
     return true;
@@ -45,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Is mobile device?', isMobileDevice());
     if (!isMobileDevice()) {
         console.log('Not a mobile device, showing desktop message');
-        showDesktopMessage();
         return;
     }
 
@@ -107,7 +72,6 @@ function initGame() {
     console.log('initGame called');
     if (!isMobileDevice()) {
         console.log('Not a mobile device, showing desktop message from initGame');
-        showDesktopMessage();
         return;
     }
 
@@ -133,7 +97,6 @@ function initGame() {
     console.log('initGame called');
     if (!isMobileDevice()) {
         console.log('Not a mobile device, showing desktop message from initGame');
-        showDesktopMessage();
         return;
     }
 
@@ -400,7 +363,6 @@ function initGame() {
     console.log('initGame called');
     if (!isMobileDevice()) {
         console.log('Not a mobile device, showing desktop message from initGame');
-        showDesktopMessage();
         return;
     }
 
