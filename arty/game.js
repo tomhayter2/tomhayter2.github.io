@@ -1115,7 +1115,7 @@ function updateCollisions() {
     for (let i = coins.length - 1; i >= 0; i--) {
         const coin = coins[i];
         if (coin.active && checkCollision(playerHitbox, coin)) {
-            score++;
+            score = score + 10;
             AudioEngine.playSound('collect');
             AudioEngine.setVolume('collect', SOUND_VOLUMES.COLLECT);
             coin.active = false;
