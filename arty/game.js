@@ -1,4 +1,4 @@
-let gameUnlocked = false;
+let gameUnlocked = true;
 
 // Define showDesktopMessage in the global scope
 
@@ -7,11 +7,59 @@ function isMobileDevice() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded event fired');
+    console.log('Is mobile device?', isMobileDevice());
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message');
+        showDesktopMessage();
+        return;
+    }
+
+    const layloGate = document.getElementById('layloGate');
+    const layloForm = document.getElementById('layloForm');
     const skipButton = document.querySelector('.skip-signup');  // Changed this line
-    unlockGame();
+
+    layloForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('layloEmail').value;
+        subscribeToLaylo(email);
+    });
+
+    skipButton.addEventListener('click', function(e) {  // Added 'e' parameter
+        e.preventDefault();  // Added this line
+        console.log('Skipped Laylo form (for testing)');
+        unlockGame();
+    });
+
+    function subscribeToLaylo(email) {
+        fetch('/.netlify/functions/subscribe', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => { throw err; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data.message);
+            // Handle successful subscription (e.g., unlock game)
+            unlockGame();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle the error (e.g., show an error message to the user)
+            alert('Failed to subscribe: ' + (error.error || error.message || 'Unknown error'));
+        });
+    }
 
     function unlockGame() {
         gameUnlocked = true;
+        layloGate.style.display = 'none';
         initGame();
     }
 });
@@ -23,6 +71,11 @@ function removeClickableAreas() {
 
 function initGame() {
     console.log('initGame called');
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message from initGame');
+        showDesktopMessage();
+        return;
+    }
 
     if (!gameUnlocked) {
         console.log('Game is locked. Please sign up to play.');
@@ -33,6 +86,10 @@ function initGame() {
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
     
+    if (!isMobileDevice()) {
+        drawDesktopMessage();
+        return;
+    }
     
     // Rest of the initGame function...
 }
@@ -40,12 +97,25 @@ function initGame() {
 // Modify the existing initGame function
 function initGame() {
     console.log('initGame called');
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message from initGame');
+        showDesktopMessage();
+        return;
+    }
 
-
+    if (!gameUnlocked) {
+        console.log('Game is locked. Please sign up to play.');
+        return;
+    }
 
     console.log('Initializing game');
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
+    
+    if (!isMobileDevice()) {
+        drawDesktopMessage();
+        return;
+    }
     
     // Rest of the initGame function...
 }
@@ -294,11 +364,25 @@ document.addEventListener('DOMContentLoaded', initGame);
 
 function initGame() {
     console.log('initGame called');
+    if (!isMobileDevice()) {
+        console.log('Not a mobile device, showing desktop message from initGame');
+        showDesktopMessage();
+        return;
+    }
+
+    if (!gameUnlocked) {
+        console.log('Game is locked. Please sign up to play.');
+        return;
+    }
 
     console.log('Initializing game');
     canvas = document.getElementById('gameCanvas');
     ctx = canvas.getContext('2d');
-
+    
+    if (!isMobileDevice()) {
+        drawDesktopMessage();
+        return // Exit the function early for non-mobile devices
+    }
     
     // Load high score
     highScore = parseInt(localStorage.getItem('highScore')) || 0;
@@ -1449,6 +1533,30 @@ document.addEventListener('keydown', (event) => {
 
 function isMobileDevice() {
     return true;
+}
+
+function drawDesktopMessage() {
+    ctx.fillStyle = '#1E90FF'; // Match your game's background color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.font = '24px GameFont';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    
+    const message = 'This game is only playable on mobile devices.';
+    const messageLines = message.split(' ').reduce((acc, word) => {
+        if (!acc.length || (acc[acc.length - 1] + ' ' + word).length > 30) {
+            acc.push(word);
+        } else {
+            acc[acc.length - 1] += ' ' + word;
+        }
+        return acc;
+    }, []);
+    
+    messageLines.forEach((line, index) => {
+        ctx.fillText(line, canvas.width / 2, canvas.height / 2 + (index - messageLines.length / 2 + 0.5) * 30);
+    });
 }
 
 function drawHitboxes() {
